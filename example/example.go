@@ -13,7 +13,7 @@ func main(){
         fmt.Println("Set the POSTMARK_API environment varible to run this demo")
         os.Exit(1)
     }
-    p := postmark.NewPostmark(os.Getenv("POSTMARK_API"))
+    p := postmark.NewPostmark(apiKey)
     r, e := p.Send(&postmark.Message{
                 From: "example@sender.com",
                 To: "example@receiver.com",
