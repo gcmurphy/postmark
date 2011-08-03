@@ -1,6 +1,6 @@
 include $(GOROOT)/src/Make.inc
 
-TARG=postmark
+TARG=github.com/gcmurphy/postmark
 GOFILES=\
 	msg.go\
     postmark.go\

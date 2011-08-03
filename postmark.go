@@ -44,7 +44,8 @@ func (p *Postmark) Send(m *Message)(* MessageReceipt, os.Error){
             return nil, fmt.Errorf("Postmark seems to be down!")
     }
 
-    body := bytes.NewBuffer(make([]byte, rsp.ContentLength))
+
+    body := bytes.NewBuffer([]byte{})
     _, err = io.Copy(body, rsp.Body)
     if err != nil {
         return nil, err
