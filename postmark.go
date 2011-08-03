@@ -44,13 +44,16 @@ func (p *Postmark) Send(m *Message)(* MessageReceipt, os.Error){
             return nil, fmt.Errorf("Postmark seems to be down!")
     }
 
-
-    body := bytes.NewBuffer([]byte{})
-    _, err = io.Copy(body, rsp.Body)
+    var body bytes.Buffer
+    _, err = io.Copy(&body, rsp.Body)
+    rsp.Body.Close()
     if err != nil {
         return nil, err
     }
 
-    receipt, err := UnmarshalReceipt(body.Bytes())
-    return receipt, err
+    receipt, err := UnmarshalReceipt([]byte(body.String()))
+    if err != nil {
+        return nil, err
+    }
+    return receipt, nil
 }

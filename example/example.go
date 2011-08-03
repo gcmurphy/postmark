@@ -15,8 +15,8 @@ func main(){
     }
     p := postmark.NewPostmark(os.Getenv("POSTMARK_API"))
     r, e := p.Send(&postmark.Message{
-                From: "gm@bleepit.net",
-                To: "grantcmurphy@gmail.com",
+                From: "example@sender.com",
+                To: "example@receiver.com",
                 Subject: "Test postmark",
                 TextBody: "Hello World!"})
 
