@@ -20,13 +20,15 @@ type Attachment struct {
     ContentType string
 }
 
-type MessageReceipt struct {
+type Response struct {
     ErrorCode int
     Message string
     MessageID string
     SubmittedAt string //Date 
     To string
 }
+
+type BatchResponse []Response
 
 type Message struct {
     From string
@@ -41,6 +43,9 @@ type Message struct {
     Headers []Header
     Attachments []Attachment
 }
+
+type BatchMessage []Message
+
 
 func (p *Message) String() string{
     js, e := json.MarshalIndent(p, "", "")
@@ -89,7 +94,6 @@ func (p *Message) Attach(file string)(os.Error){
     return nil
 }
 
-// Convenience?
 func unmarshal (msg []byte, i interface{})(os.Error){
     e := json.Unmarshal(msg, i)
     if e != nil {
@@ -108,22 +112,20 @@ func UnmarshalMessage(msg []byte)(*Message, os.Error){
     return &m, e
 }
 
-func (r *MessageReceipt) Marshal()([]byte, os.Error){
+func (r *Response) Marshal()([]byte, os.Error){
     return json.Marshal(*r)
 }
 
-func UnmarshalReceipt(rsp []byte)(*MessageReceipt, os.Error){
-    var r MessageReceipt
+func UnmarshalResponse(rsp []byte)(*Response, os.Error){
+    var r Response
     e := unmarshal(rsp, &r)
     return &r, e
 }
 
-func (r *MessageReceipt) String() string{
+func (r *Response) String() string{
     js, e := json.MarshalIndent(r, "", "")
     if e != nil {
         return ""
     }
     return string(js)
 }
-
-

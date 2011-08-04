@@ -2,7 +2,7 @@ include $(GOROOT)/src/Make.inc
 
 TARG=github.com/gcmurphy/postmark
 GOFILES=\
-	msg.go\
+	message.go\
     postmark.go\
 
 include $(GOROOT)/src/Make.pkg

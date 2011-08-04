@@ -53,7 +53,7 @@ func TestUnmarshal(t *testing.T){
     }
     println(email.String())
 
-    rsp, err := UnmarshalReceipt([]byte(jsonRsp))
+    rsp, err := UnmarshalResponse([]byte(jsonRsp))
     if err != nil {
         t.Errorf("Can't unmarshal response: %s\n", err.String())
     }
@@ -68,7 +68,7 @@ func TestAttach(t *testing.T){
         t.Errorf("Can't unmarshal mesage: %s\n", err.String())
     }
 
-    err = email.Attach("README.txt")
+    err = email.Attach("testdata/attachment.txt")
     if err != nil {
         t.Errorf("Failed to attach file: %s\n", err.String())
     }

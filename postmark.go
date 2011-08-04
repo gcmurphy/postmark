@@ -19,7 +19,7 @@ func NewPostmark(apikey string)(*Postmark){
     return &Postmark{ key: apikey }
 }
 
-func (p *Postmark) Send(m *Message)(* MessageReceipt, os.Error){
+func (p *Postmark) Send(m *Message)(* Response, os.Error){
 
     data, err := m.Marshal()
     if err != nil {
@@ -51,9 +51,9 @@ func (p *Postmark) Send(m *Message)(* MessageReceipt, os.Error){
         return nil, err
     }
 
-    receipt, err := UnmarshalReceipt([]byte(body.String()))
+    prsp, err := UnmarshalResponse([]byte(body.String()))
     if err != nil {
         return nil, err
     }
-    return receipt, nil
+    return prsp, nil
 }
