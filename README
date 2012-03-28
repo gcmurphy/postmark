@@ -34,7 +34,7 @@ func main(){
     pm := postmark.NewPostmark("YOUR_API_KEY")
     rsp, err := pm.Send(msg)
     if err != nil {
-        println(err.String())
+        println(err.Error())
         os.Exit(1)
     }
     println(rsp.String())
