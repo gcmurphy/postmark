@@ -1,9 +1,9 @@
 package postmark
 import (
-    "json"
     "os"
     "fmt"
     "io/ioutil"
+    "encoding/json"
     "encoding/base64"
     "path"
     "mime"
@@ -56,15 +56,15 @@ func (p *Message) String() string{
 }
 
 // Attach file to message (base64 encoded)
-func (p *Message) Attach(file string)(os.Error){
+func (p *Message) Attach(file string)(error){
 
     finfo, e := os.Stat(file)
     if e != nil {
         return e
     }
 
-    if finfo.Size > int64(10e6){
-        return fmt.Errorf("File size %d exceeds 10MB limit.", finfo.Size)
+    if finfo.Size() > int64(10e6){
+        return fmt.Errorf("File size %d exceeds 10MB limit.", finfo.Size())
     }
 
     fh, e := os.Open(file)
@@ -82,11 +82,11 @@ func (p *Message) Attach(file string)(os.Error){
 
     mimeType := mime.TypeByExtension(path.Ext(file))
     if len(mimeType) == 0 {
-        return fmt.Errorf("Unknown mime type for attachment: %s", file) 
+        return fmt.Errorf("Unknown mime type for attachment: %s", file)
     }
 
     attachment := Attachment{
-        Name: finfo.Name,
+        Name: finfo.Name(),
         Content: base64.StdEncoding.EncodeToString(cnt),
         ContentType: mimeType,
     }
@@ -94,7 +94,7 @@ func (p *Message) Attach(file string)(os.Error){
     return nil
 }
 
-func unmarshal (msg []byte, i interface{})(os.Error){
+func unmarshal (msg []byte, i interface{})(error){
     e := json.Unmarshal(msg, i)
     if e != nil {
         return e
@@ -102,21 +102,21 @@ func unmarshal (msg []byte, i interface{})(os.Error){
     return nil
 }
 
-func (m *Message) Marshal()([]byte, os.Error){
+func (m *Message) Marshal()([]byte, error){
     return json.Marshal(*m)
 }
 
-func UnmarshalMessage(msg []byte)(*Message, os.Error){
+func UnmarshalMessage(msg []byte)(*Message, error){
     var m Message
     e := unmarshal(msg, &m)
     return &m, e
 }
 
-func (r *Response) Marshal()([]byte, os.Error){
+func (r *Response) Marshal()([]byte, error){
     return json.Marshal(*r)
 }
 
-func UnmarshalResponse(rsp []byte)(*Response, os.Error){
+func UnmarshalResponse(rsp []byte)(*Response, error){
     var r Response
     e := unmarshal(rsp, &r)
     return &r, e

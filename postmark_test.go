@@ -35,7 +35,7 @@ func TestSend(t *testing.T){
             })
 
     if e != nil {
-        t.Fatal("Send failed! ", e.String())
+        t.Fatal("Send failed! ", e.Error())
     }
 
     if r == nil || r.ErrorCode != 0 {
@@ -56,7 +56,7 @@ func TestAttachment(t *testing.T){
     err := msg.Attach("testdata/attachment.txt")
     println(msg.String())
     if err != nil {
-        t.Fatal("Attach failed. ", err.String())
+        t.Fatal("Attach failed. ", err.Error())
     }
     p := NewPostmark(cfg["key"])
     if p == nil {
@@ -65,7 +65,7 @@ func TestAttachment(t *testing.T){
 
     rsp, err := p.Send(msg)
     if err != nil {
-        t.Fatal("Send failed.", err.String())
+        t.Fatal("Send failed.", err.Error())
     }
 
     if rsp.ErrorCode != 0 {

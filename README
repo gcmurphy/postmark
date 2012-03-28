@@ -1,3 +1,5 @@
+This project is no longer actively maintained. I might get back to it one 
+day. Have updated things for the Go version 1 release.
 
 Very basic access to the postmark API. At the moment it just allows you to 
 send a single message at a time. 
@@ -37,9 +39,4 @@ func main(){
     }
     println(rsp.String())
 }
-
-Coming soon: 
-    * Add batch support. Use channel interface and trigger when 
-      enough messages are queued or a timer expires or both.
-    * Look at the bounce API.
 

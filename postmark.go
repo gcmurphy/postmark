@@ -1,9 +1,8 @@
 package postmark
 
 import (
-    "os"
     "io"
-    "http"
+    "net/http"
     "bytes"
     "fmt"
 )
@@ -19,7 +18,7 @@ func NewPostmark(apikey string)(*Postmark){
     return &Postmark{ key: apikey }
 }
 
-func (p *Postmark) Send(m *Message)(* Response, os.Error){
+func (p *Postmark) Send(m *Message)(* Response, error){
 
     data, err := m.Marshal()
     if err != nil {
